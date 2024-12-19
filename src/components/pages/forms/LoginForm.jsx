@@ -10,7 +10,7 @@ const initialValues = {
   manager_password: "",
 };
 
-function Login() {
+function LoginForm() {
   const { handleLogin } = useContext(AuthContext);
 
   return (
@@ -40,7 +40,7 @@ function Login() {
                 name="manager_email"
                 type="email"
                 id="manager_email"
-                className="block w-full pl-10 rounded-xl border-2 border-amber-200 bg-amber-50 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+                className="block w-full pl-10 rounded-xl border-2 border-amber-200 bg-amber-50 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-600 transition-all duration-200"
                 placeholder="Enter your email"
                 required
               />
@@ -55,7 +55,6 @@ function Login() {
               </ErrorMessage>
             </div>
           </div>
-
           <div className="space-y-2">
             <label
               htmlFor="manager_password"
@@ -71,7 +70,7 @@ function Login() {
                 name="manager_password"
                 type="password"
                 id="manager_password"
-                className="block w-full pl-10 rounded-xl border-2 border-amber-200 bg-amber-50 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+                className="block w-full pl-10 rounded-xl border-2 border-amber-200 bg-amber-50 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-600 transition-all duration-200"
                 placeholder="Enter your password"
                 required
               />
@@ -86,11 +85,10 @@ function Login() {
               </ErrorMessage>
             </div>
           </div>
-
           <button
             disabled={isSubmitting}
             type="submit"
-            className="w-full bg-amber-600 text-white rounded-xl py-3 px-4 font-semibold hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg"
+            className="w-full bg-gradient-to-r from-amber-500  via-amber-600 to-amber-300 text-white rounded-xl py-3 px-4 font-semibold hover:from-amber-700 hover:to-amber-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg"
           >
             {isSubmitting ? "inProcces..." : "Sign In"}
           </button>
@@ -100,4 +98,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginForm;

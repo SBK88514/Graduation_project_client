@@ -1,9 +1,8 @@
-// components/BackgroundLayout.js
 import React from "react";
 
 const BackgroundLayout = ({ backgroundImage, children }) => {
   const defaultBackgroundImage =
-    "https://res.cloudinary.com/dp08vd3cy/image/upload/v1734259567/ctxvpiw3alojmz4stauy.webp"; // Your default image
+    "https://res.cloudinary.com/dmdapgseu/image/upload/v1734548151/DALL_E_2024-12-18_20.55.38_-_A_beautiful_modern_and_abstract_construction_site_background_with_bright_and_elegant_shades_of_warm_amber_gradients_FFF7E6_to_FFEBCD_and_soft_or_om9yco.webp"; // Your default image
 
   return (
     <div
@@ -17,10 +16,6 @@ const BackgroundLayout = ({ backgroundImage, children }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Default gradient overlay */}
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-amber-900/40 via-amber-500/30 to-transparent" /> */}
-
-      {/* Content container */}
       <div className="relative z-10">{children}</div>
     </div>
   );

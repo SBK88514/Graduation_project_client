@@ -83,16 +83,16 @@ function AddIssueForm() {
   }
 
   return (
-    <div className="h-[calc(100vh-64px)] flex items-center justify-center w-auto">
-      <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
-        <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
+    <div className="min-h-[calc(100vh-80px)] w-full flex items-center justify-center p-6 sm:p-6 lg:p-8">
+      <div className="bg-amber-50 p-4 rounded-2xl shadow-lg w-full max-w-2xl mx-auto">
+        <h2 className="text-xl sm:text-2xl font-bold text-amber-700 mb-4 text-center">
           Report New Issue
         </h2>
 
         <form onSubmit={handleSubmit}>
-          <div className="space-y-6 bg-white p-6 rounded-xl shadow-sm">
+          <div className="space-y-4 bg-white p-3 sm:p-4 rounded-xl shadow-sm">
             {/* Location Details */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
@@ -101,8 +101,8 @@ function AddIssueForm() {
                   Building
                 </label>
                 <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3
-                 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className=" w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-1.5 px-3
+             focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   id="building"
                   name="issue_building"
                   value={formValues.issue_building}
@@ -124,8 +124,8 @@ function AddIssueForm() {
                   Floor
                 </label>
                 <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3
-                 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-1.5 px-3
+             focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   id="floor"
                   name="issue_floor"
                   value={formValues.issue_floor}
@@ -156,13 +156,12 @@ function AddIssueForm() {
                   onChange={handleChange}
                   required
                   placeholder="Enter apartment number"
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none
-                   focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none
+               focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
               </div>
 
-              {/* Add Profession select here */}
-              <div>
+              {/* <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
                   htmlFor="profession"
@@ -170,7 +169,7 @@ function AddIssueForm() {
                   Profession
                 </label>
                 <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   id="profession"
                   name="issue_profession"
                   value={formValues.issue_profession}
@@ -189,7 +188,7 @@ function AddIssueForm() {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
             </div>
 
             {/* Issue Description */}
@@ -206,7 +205,7 @@ function AddIssueForm() {
                 value={formValues.issue_description}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full rounded-xl border-2  border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Please describe the issue in detail..."
                 rows="4"
               ></textarea>
@@ -268,21 +267,16 @@ function AddIssueForm() {
             </div>
 
             {/* Submit Buttons */}
-            <div className="flex justify-end space-x-4 pt-4">
+            <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 pt-2">
               <button
                 type="button"
-                className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2
-                 focus:ring-amber-500 focus:ring-offset-2 transition-colors
-                  duration-200"
+                className="w-full sm:w-auto px-6 py-1.5 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-amber-600 text-white 
-                rounded-xl hover:bg-amber-700 focus:outline-none
-                 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
-                  transition-colors duration-200"
+                className="w-full sm:w-auto px-6 py-1.5 bg-gradient-to-r from-amber-500  via-amber-600 to-amber-300 text-white rounded-xl hover:from-amber-600 hover:to-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
                 disabled={mutation.isLoading}
               >
                 {mutation.isLoading ? "Submitting..." : "Submit Issue"}
