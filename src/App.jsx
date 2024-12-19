@@ -7,12 +7,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { useContext } from "react";
-import NavAdmin from "./components/section/NavUser";
-// import NavPublic from "./components/section/NavPublic";
 import { AuthContext } from "./components/contexts/AuthContext";
 
 import { Component } from "lucide-react";
 import BackgroundLayout from "./components/ui/backgroundLayout";
+import NavUser from "./components/section/NavUser";
 
 function ProtectedRoute({ isAuth }) {
   return isAuth ? <Outlet /> : <Navigate to="/" replace />;
@@ -22,7 +21,7 @@ function Root({ isAuth }) {
   console.log(isAuth);
   return (
     <>
-        {isAuth ? <NavAdmin /> : <Navigate to={"login"} />}
+        {isAuth ? <NavUser /> : <Navigate to={"login"} />}
         <Outlet />
     </>
   );
