@@ -19,9 +19,13 @@ function Root({ isAuth }) {
   console.log(isAuth);
   return (
     <>
-      {isAuth ? <Navbar /> : <Navigate to={"login"} />}
+      {isAuth ? (
+        <>
+        <Navbar />
+        <ButtonAddIssue />
+        </>
+      ) : <Navigate to={"login"} />}
       <Outlet />
-      <ButtonAddIssue />
     </>
   );
 }
