@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, Link } from "lucide-react";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -27,7 +27,9 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* Logo */}
-            <a href="/welcomepage" className="flex-shrink-0">
+            <a
+             href="/welcomepage"
+              className="flex-shrink-0">
               <img
                 src="https://res.cloudinary.com/dp08vd3cy/image/upload/v1733785970/logo_lhjqzl.jpg"
                 alt="Logo"
@@ -37,18 +39,18 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8">
-              <a
-                href="/addissue"
+              <Link
+                to="/addissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Add Issue
-              </a>
-              <a
-                href="/allissues"
+              </Link>
+              <Link
+                to="/allissues"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 All Issues
-              </a>
+              </Link>
             </div>
 
             {/* Desktop User Menu */}
