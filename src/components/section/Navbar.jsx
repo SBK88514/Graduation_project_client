@@ -3,22 +3,27 @@
 import React, { useState } from "react";
 
 import { Menu, X, User, LogOut, Link } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+import { useContext } from "react";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
-  const user = {
-    manager_name: "John Doe",
-  };
+  // const user = {
+  //   manager_name: "John Doe",
+  // };
 
-  const handleSignOut = () => {
-    console.log("Signing out...");
-  };
+  // const handleSignOut = () => {
+  //   console.log("Signing out...");
+  // };
 
-  const handleEditManager = (user) => {
-    console.log("Editing profile...", user);
-  };
+  // const handleEditManager = (user) => {
+  //   console.log("Editing profile...", user);
+  // };
 
   return (
     <>
@@ -27,9 +32,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* Logo */}
-            <a
-             href="/welcomepage"
-              className="flex-shrink-0">
+            <a href="/welcomepage" className="flex-shrink-0">
               <img
                 src="https://res.cloudinary.com/dp08vd3cy/image/upload/v1733785970/logo_lhjqzl.jpg"
                 alt="Logo"
@@ -37,20 +40,26 @@ const Navbar = () => {
               />
             </a>
 
-            {/* Desktop Navigation */}
+        
             <div className="hidden md:flex space-x-8">
-              <Link
+              <NavLink
                 to="/addissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Add Issue
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/allissues"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 All Issues
-              </Link>
+              </NavLink>
+              <NavLink
+                to="/allissues"
+                className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                My Issues
+              </NavLink>
             </div>
 
             {/* Desktop User Menu */}
@@ -64,7 +73,7 @@ const Navbar = () => {
                     <User className="h-5 w-5 text-white" />
                   </div>
                   <span className="font-medium text-sm text-white">
-                    {user.manager_name}
+                    {/* {user.manager_name} */}
                   </span>
                 </button>
 
@@ -72,14 +81,14 @@ const Navbar = () => {
                 {isDropdownOpen && (
                   <div className="absolute right-4 mt-2 w-48 bg-amber-100 rounded-xl shadow-lg py-1 z-50">
                     <button
-                      onClick={() => handleEditManager(user)}
+                      // onClick={() => handleEditManager(user)}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <User className="h-4 w-4 mr-2" />
                       Profile
                     </button>
                     <button
-                      onClick={handleSignOut}
+                      // onClick={handleSignOut}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <LogOut className="h-4 w-4 mr-2" />
@@ -115,7 +124,7 @@ const Navbar = () => {
             className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out ${
               isSidebarOpen ? "opacity-100" : "opacity-0"
             }`}
-            onClick={() => setIsSidebarOpen(false)}
+            // onClick={() => setIsSidebarOpen(false)}
           />
 
           {/* Sidebar */}
@@ -124,7 +133,7 @@ const Navbar = () => {
               {/* Close button */}
               <div className="flex justify-end p-4">
                 <button
-                  onClick={() => setIsSidebarOpen(false)}
+                  // onClick={() => setIsSidebarOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
                 >
                   <X className="h-6 w-6" />
@@ -133,18 +142,18 @@ const Navbar = () => {
 
               {/* Mobile navigation links */}
               <div className="px-4 py-2">
-                <a
-                  href="/addissue"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
-                >
-                  Add Issue
-                </a>
-                <a
-                  href="/allissues"
+                <NavLink
+                  to="/allissues"
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
                 >
                   All Issues
-                </a>
+                </NavLink>
+                <NavLink
+                  href="/myissues"
+                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
+                >
+                  My Issues
+                </NavLink>
               </div>
 
               {/* Mobile user menu */}
@@ -155,18 +164,18 @@ const Navbar = () => {
                       <User className="h-5 w-5 text-white" />
                     </div>
                     <span className="font-medium text-sm text-gray-700">
-                      {user.manager_name}
+                      {user?.employeeName}
                     </span>
                   </div>
                   <button
-                    onClick={() => handleEditManager(user)}
+                    // onClick={() => handleEditManager(user)}
                     className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Profile
                   </button>
                   <button
-                    onClick={handleSignOut}
+                    // onClick={handleSignOut}
                     className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <LogOut className="h-4 w-4 mr-2" />

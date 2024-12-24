@@ -21,10 +21,12 @@ function Root({ isAuth }) {
     <>
       {isAuth ? (
         <>
-        <Navbar />
-        <ButtonAddIssue />
+          <Navbar />
+          <ButtonAddIssue />
         </>
-      ) : <Navigate to={"login"} />}
+      ) : (
+        <Navigate to={"login"} />
+      )}
       <Outlet />
     </>
   );

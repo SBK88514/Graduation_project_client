@@ -2,29 +2,27 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Paginaiton from "../ui/Paginaiton.jsx";
-import ExportButton from "../ui/ExportButton.jsx"
-import {ActionContext} from "../contexts/ActionContext.jsx"
-import {exportToXL} from "../../lib";
-
+import ExportButton from "../ui/ExportButton.jsx";
+import { ActionContext } from "../contexts/ActionContext.jsx";
+import { exportToXL } from "../../lib";
+import { AiFillLike } from "react-icons/ai";
 
 function CardIssues() {
-  const { getAllDetails} = useContext(ActionContext)
+  const { getAllDetails, mutateUpdate } = useContext(ActionContext);
 
-  const [page, setPage] = useState(1)
-  const [limit] = useState(3)
+  const [page, setPage] = useState(1);
+  const [limit] = useState(3);
 
   const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_issues", page],
-    queryFn: async () =>(await axios.get(url)).data,
-    select: (data) =>({
+    queryFn: async () => (await axios.get(url)).data,
+    select: (data) => ({
       Allissues: data.data,
       count: data.count,
     }),
-    
-  });  
-
+  });
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -45,10 +43,10 @@ function CardIssues() {
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
     console.log(result);
-    
+
     if (!result) return;
     console.log(3);
-    
+
     exportToXL(result, "IssuesSheet");
   }
 
@@ -208,7 +206,9 @@ function CardIssues() {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <span className="text-xs">2h ago</span>
+                  <button onClick={() => mutateUpdate(_id)}>
+                    <AiFillLike />
+                  </button>
                 </div>
               </div>
 
@@ -252,7 +252,7 @@ function CardIssues() {
 
         {/* You can duplicate the card here for more issues */}
       </div>
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage}/>
+      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
     </div>
   );
 }

@@ -269,6 +269,7 @@ function AddIssueForm() {
             {/* Submit Buttons */}
             <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 pt-2">
               <button
+              onClick={() => closePage()}
                 type="button"
                 className="w-full sm:w-auto px-6 py-1.5 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
               >
@@ -287,6 +288,9 @@ function AddIssueForm() {
       </div>
     </div>
   );
+}
+function closePage(){
+  
 }
 
 export default AddIssueForm;

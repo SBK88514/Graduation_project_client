@@ -1,17 +1,18 @@
-import { useContext } from "react";
-
 import React from "react";
+import { useContext } from "react";
 import { ErrorMessage, Formik } from "formik";
 import { LoginSchema } from "../../../schema/Index";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const initialValues = {
-  manager_email: "",
-  manager_password: "",
+  employeeEmail: "",
+  employeePassword: "",
 };
+console.log("123");
 
 function LoginForm() {
   const { handleLogin } = useContext(AuthContext);
+  console.log(initialValues);
 
   return (
     <Formik
@@ -27,24 +28,24 @@ function LoginForm() {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <label
-              htmlFor="manager_email"
+              htmlFor="employeeEmail"
               className="block text-sm font-semibold text-amber-800 tracking-wide"
             >
               Email
             </label>
             <div className="relative">
               <input
-                value={values.manager_email}
+                value={values.employeeEmail}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                name="manager_email"
+                name="employeeEmail"
                 type="email"
-                id="manager_email"
+                id="employeeEmail"
                 className="block w-full pl-10 rounded-xl border-2 border-amber-200 bg-amber-50 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-600 transition-all duration-200"
                 placeholder="Enter your email"
                 required
               />
-              <ErrorMessage name={"manager_email"}>
+              <ErrorMessage name={"employeeEmail"}>
                 {(msg) => (
                   <div className="mt-1">
                     <p className="text-red-500 text-base font-semibold">
@@ -57,24 +58,24 @@ function LoginForm() {
           </div>
           <div className="space-y-2">
             <label
-              htmlFor="manager_password"
+              htmlFor="employeePassword"
               className="block text-sm font-semibold text-amber-800 tracking-wide"
             >
               Password
             </label>
             <div className="relative">
               <input
-                value={values.manager_password}
+                value={values.employeePassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                name="manager_password"
+                name="employeePassword"
                 type="password"
-                id="manager_password"
+                id="employeePassword"
                 className="block w-full pl-10 rounded-xl border-2 border-amber-200 bg-amber-50 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-600 transition-all duration-200"
                 placeholder="Enter your password"
                 required
               />
-              <ErrorMessage name={"manager_password"}>
+              <ErrorMessage name={"employeePassword"}>
                 {(msg) => (
                   <div className="mt-1">
                     <p className="text-red-500 text-base font-semibold">

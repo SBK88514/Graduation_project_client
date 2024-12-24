@@ -40,10 +40,11 @@ function ActionProvider({ children }) {
     setEmp(employee);
     console.log(emp);
   }
-  function handleEditManager(manager) {
-    document.getElementById("manager_modal").showModal();
-    setMan(manager);
-  }
+  // function handleEditManager(manager) {
+  //   document.getElementById("manager_modal").showModal();
+  //   setMan(manager);
+  // }
+
 
 
   async function getAllDetails(url){
@@ -64,17 +65,27 @@ function ActionProvider({ children }) {
   }
 
 
+  const { mutate: mutateUpdate  } = useMutation({
+    mutationKey: ["update_issue"],
+    mutationFn: async (id) => axios.delete(`issues/updateissue/${id}`),
+    
+      
+    
+  });
+ 
+
   const value = {
     toggleRequest,
     setToggleRequest,
     deleteEmployee,
     emp,
     handleEdit,
-    handleEditManager,
+    // handleEditManager,
     man,
     mutateDelete,
     getAllDetails,
-    handleAddProfession
+    handleAddProfession, 
+    mutateUpdate 
 
   };
 

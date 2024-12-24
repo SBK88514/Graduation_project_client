@@ -11,13 +11,14 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   async function handleLogin(values) {
+    
     try {
-      const { data } = await axios.post("/users/manager/signin", values);
+      const { data } = await axios.post("/users/employee/signin", values);
       if (data.success) {
         showSuccessToast(data.message);
         setIsAuth(true);
-        setUser(data.manager)
-        console.log("Signed-in user:", data.manager);
+        setUser(data.employee);
+        console.log("Signed-in user:", data.employee);
         return true;
       }
     } catch (error) {
@@ -44,43 +45,38 @@ function AuthProvider({ children }) {
     authUser();
   }, []);
 
-  async function handleManager(values) {
-    try {
-      const { data } = await axios.post("users/manager/signup", values);
-      console.log(data);
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
+  // async function handleManager(values) {
+  //   try {
+  //     const { data } = await axios.post("users/manager/signup", values);
+  //     console.log(data);
+  //     return true;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return false;
+  //   }
+  // }
 
-  async function handleEmployee(values) {
-    try {
-      const { data } = await axios.post("users/employee/signup", values);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async function signOut(){
-    try{
-      const {data} = await axios.get("/users/manager/logout")
-      console.log(data)
-    }
-    catch(error){
-      console.log(error)
-    }
-   
-  }
+  // async function handleEmployee(values) {
+  //   try {
+  //     const { data } = await axios.post("users/employee/signup", values);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // async function signOut() {
+  //   try {
+  //     const { data } = await axios.get("/users/manager/logout");
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   const value = {
-    isAuth,
     handleLogin,
-    handleEmployee,
-    handleManager,
     user,
-    signOut
+    isAuth,
   };
 
   return (

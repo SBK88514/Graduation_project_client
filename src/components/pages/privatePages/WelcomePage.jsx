@@ -1,5 +1,4 @@
 import React from "react";
-import WelcomeAdmin from "./WelcomeAdmin";
 
 function WelcomePage() {
   const backgroundImageUrl =
@@ -12,9 +11,7 @@ function WelcomePage() {
         backgroundImage: `url(${backgroundImageUrl})`,
       }}
     >
-      <div className="relative z-10 min-h-[calc(100vh-64px)] flex items-center justify-center p-4">
-        <WelcomeAdmin />
-      </div>
+      <div className="relative z-10 min-h-[calc(100vh-64px)] flex items-center justify-center p-4"></div>
     </div>
   );
 }
