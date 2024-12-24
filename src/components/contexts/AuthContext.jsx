@@ -11,14 +11,13 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   async function handleLogin(values) {
-    
     try {
       const { data } = await axios.post("/users/employee/signin", values);
       if (data.success) {
         showSuccessToast(data.message);
         setIsAuth(true);
-        setUser(data.employee);
-        console.log("Signed-in user:", data.employee);
+        setUser(data.data);
+        console.log("Signed-in user:", data.data);
         return true;
       }
     } catch (error) {

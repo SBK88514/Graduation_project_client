@@ -6,9 +6,11 @@ import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib";
 import { AiFillLike } from "react-icons/ai";
+import { AuthContext } from "../contexts/AuthContext.jsx";
 
 function CardIssues() {
   const { getAllDetails, mutateUpdate } = useContext(ActionContext);
+  const { user } = useContext(AuthContext);
 
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
@@ -206,9 +208,18 @@ function CardIssues() {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <button onClick={() => mutateUpdate(_id)}>
+                  <button
+                    onClick={() =>
+                      mutateUpdate({
+                        issues: element._id,
+                        employees: user?._id,
+                      })
+                    }
+                  >
                     <AiFillLike />
                   </button>
+                  <span>{element.employees?.employeeName}</span>
+          
                 </div>
               </div>
 
