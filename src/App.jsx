@@ -60,19 +60,17 @@ function App() {
             })}
           />
 
-          {/* Private Routes */}
-          <Route
-            path="Professions"
-            lazy={async () => ({
-              Component: (
-                await import("./components/pages/privatePages/AllProfessions")
-              ).default,
-            })}
-          />
           <Route
             path="addissue"
             lazy={async () => ({
               Component: (await import("./components/pages/forms/AddIssueForm"))
+                .default,
+            })}
+          />
+          <Route
+            path="myissue"
+            lazy={async () => ({
+              Component: (await import("./components/cards/MyIssues"))
                 .default,
             })}
           />

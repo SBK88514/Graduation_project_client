@@ -6,24 +6,16 @@ import { Menu, X, User, LogOut, Link } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from "react";
+import { ActionContext } from "../contexts/ActionContext";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useContext(AuthContext);
+  const {mutateMyIssue} = useContext(ActionContext)
   console.log(user);
 
-  // const user = {
-  //   manager_name: "John Doe",
-  // };
 
-  // const handleSignOut = () => {
-  //   console.log("Signing out...");
-  // };
-
-  // const handleEditManager = (user) => {
-  //   console.log("Editing profile...", user);
-  // };
 
   return (
     <>
@@ -40,7 +32,6 @@ const Navbar = () => {
               />
             </a>
 
-        
             <div className="hidden md:flex space-x-8">
               <NavLink
                 to="/addissue"
@@ -49,13 +40,15 @@ const Navbar = () => {
                 Add Issue
               </NavLink>
               <NavLink
+             
                 to="/allissues"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 All Issues
               </NavLink>
               <NavLink
-                to="/allissues"
+              onClick={() => mutateMyIssue({id: user._id})}
+                to="/myissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 My Issues
@@ -124,7 +117,7 @@ const Navbar = () => {
             className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out ${
               isSidebarOpen ? "opacity-100" : "opacity-0"
             }`}
-            // onClick={() => setIsSidebarOpen(false)}
+           
           />
 
           {/* Sidebar */}
@@ -133,7 +126,7 @@ const Navbar = () => {
               {/* Close button */}
               <div className="flex justify-end p-4">
                 <button
-                  // onClick={() => setIsSidebarOpen(false)}
+                 
                   className="text-gray-500 hover:text-gray-700"
                 >
                   <X className="h-6 w-6" />
@@ -149,7 +142,7 @@ const Navbar = () => {
                   All Issues
                 </NavLink>
                 <NavLink
-                  href="/myissues"
+                  to="/myissues"
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
                 >
                   My Issues
