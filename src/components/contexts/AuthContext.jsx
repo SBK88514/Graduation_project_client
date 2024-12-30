@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import { showSuccessToast, showErrorToast } from "../../lib/Toast";
+// import { showSuccessToast, showErrorToast } from "../../lib/Toast";
 import ActionProvider from "./ActionContext";
 
 export const AuthContext = createContext();
@@ -14,7 +14,7 @@ function AuthProvider({ children }) {
     try {
       const { data } = await axios.post("/users/employee/signin", values);
       if (data.success) {
-        showSuccessToast(data.message);
+        // showSuccessToast(data.message);
         setIsAuth(true);
         setUser(data.data);
         console.log("Signed-in user:", data.data);
@@ -44,25 +44,7 @@ function AuthProvider({ children }) {
     authUser();
   }, []);
 
-  // async function handleManager(values) {
-  //   try {
-  //     const { data } = await axios.post("users/manager/signup", values);
-  //     console.log(data);
-  //     return true;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return false;
-  //   }
-  // }
 
-  // async function handleEmployee(values) {
-  //   try {
-  //     const { data } = await axios.post("users/employee/signup", values);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
   // async function signOut() {
   //   try {
   //     const { data } = await axios.get("/users/manager/logout");

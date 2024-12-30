@@ -1,48 +1,33 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Paginaiton from "../ui/Paginaiton.jsx";
 import ExportButton from "../ui/ExportButton.jsx";
-import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib";
 import { AiFillLike } from "react-icons/ai";
 import { AuthContext } from "../contexts/AuthContext.jsx";
-import SearchInput from "../pages/publicPages/SearchInput.jsx";
-import UseSuggestions from "../hooks/UseSuggestions.jsx";
-import { ChevronDown, Filter } from "lucide-react";
-
-
+import { ActionContext } from "../contexts/ActionContext.jsx";
 
 function CardIssues() {
-  const { mutateUpdate } = useContext(ActionContext);
-  const { user } = useContext(AuthContext);
-  console.log(user);
-  const idProfession = user.employeeId;
-  console.log(idProfession);
+//   const { mutateEmployeeIssues } = useContext(ActionContext);
+  const { user } = useContext(AuthContext)
+//   const [page, setPage] = useState(1);
+//   const [limit] = useState(3);
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["get_issues"],
-    queryFn: async () =>
-      await axios.get(`/issues/allissuesbyprofession/${idProfession}`),
-    select: (data) => data.data.data,
-  });
-  console.log(data);
 
-  // console.log(Allissues)
-  // const [page, setPage] = useState(1);
-  // const [limit] = useState(3);
+//   const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
 
-  // const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
-
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryKey: ["get_issues", page],
-  //   queryFn: async () => (await axios.get(url)).data,
-  //   select: (data) => ({
-  //     Allissues: data.data,
-  //     count: data.count,
-  //   }),
-  // });
+//   const { data, isLoading, isError, error } = useQuery({
+//     queryKey: ["get_issues", page],
+//     queryFn: async () => (await axios.get(url)).data,
+//     select: (data) => ({
+//       Allissues: data.data,
+//       count: data.count,
+//     }),
+//   });
 
   const [currentIndexes, setCurrentIndexes] = useState({});
+
   const nextImage = (issueId, maxLength) => {
     setCurrentIndexes((prev) => ({
       ...prev,
@@ -56,9 +41,6 @@ function CardIssues() {
       [issueId]: prev[issueId] === 0 ? maxLength - 1 : (prev[issueId] || 0) - 1,
     }));
   };
-   // search input issues
-   const [suggestions, setSearchInput] = UseSuggestions("issues");
-   const [selected, setSelected] = useState(null);
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
@@ -69,41 +51,17 @@ function CardIssues() {
 
     exportToXL(result, "IssuesSheet");
   }
+  const {issues} = useContext(ActionContext)
+
 
   return (
     <div className="container mx-auto px-4 py-8  ">
-    
       <ExportButton download={downloadXl} />
-      <SearchInput
-          setSearchInput={setSearchInput}
-          suggestions={suggestions}
-          suggestionKey={"issue_apartment"}
-          onClick={(current) => {
-            setSelected(current);
-          }}
-        />
-
-        <div className="flex-1 text-center">
-          <h1 className="text-2xl font-bold text-amber-900">
-            Issues Management
-          </h1>
-        </div>
-        <div className="flex gap-3">
-          <button
-            className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
-                         hover:bg-amber-200 transition-all duration-200"
-          >
-            <Filter className="w-3 h-3" />
-            <span>Filter</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
-        </div>
-          {/* <Button name="Add New Issue" /> */}
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
-        {isLoading && <div>Loading...</div>}
-        {isError && <div>{error}</div>}
-        {data?.map((element) => (
+        {/* {isLoading && <div>Loading...</div>}
+        {isError && <div>{error}</div>} */}
+        {issues?.map((issue) => (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
             {/* Location Pills */}
             <div className="flex space-x-2 mb-3">
@@ -124,7 +82,7 @@ function CardIssues() {
                 <div>
                   <div className="text-xs text-amber-600">Building</div>
                   <div className="font-bold text-sm text-amber-900">
-                    {element.issue_building}
+                    {issue.issue_building}
                   </div>
                 </div>
               </div>
@@ -145,7 +103,7 @@ function CardIssues() {
                 <div>
                   <div className="text-xs text-amber-600">Floor</div>
                   <div className="font-bold text-sm text-amber-900">
-                    {element.issue_floor}
+                    {issue.issue_floor}
                   </div>
                 </div>
               </div>
@@ -166,7 +124,7 @@ function CardIssues() {
                 <div>
                   <div className="text-xs text-amber-600">apartment</div>
                   <div className="font-bold text-sm text-amber-900">
-                    {element.issue_apartment}
+                    {issue.issue_apartment}
                   </div>
                 </div>
               </div>
@@ -176,7 +134,7 @@ function CardIssues() {
               <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
               <div className="flex transition-transform duration-300 h-full">
                 <img
-                  src={element.issue_images[currentIndexes[element._id] || 0]}
+                  src={issue.issue_images[currentIndexes[issue._id] || 0]}
                   alt="Issue"
                   className="w-full h-full object-cover"
                 />
@@ -185,7 +143,7 @@ function CardIssues() {
               {/* Navigation Arrows */}
               <button
                 onClick={() =>
-                  prevImage(element._id, element.issue_images.length)
+                  prevImage(issue._id, issue.issue_images.length)
                 }
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
@@ -205,7 +163,7 @@ function CardIssues() {
               </button>
               <button
                 onClick={() =>
-                  nextImage(element._id, element.issue_images.length)
+                  nextImage(issue._id, issue.issue_images.length)
                 }
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
@@ -226,8 +184,9 @@ function CardIssues() {
 
               {/* Image Counter */}
               <div className="absolute bottom-2 right-2 bg-white/10 backdrop-blur-md text-white px-3 py-0.5 rounded-full text-xs font-medium border border-white/20">
-                {(currentIndexes[element._id] || 0) + 1}/
-                {element.issue_images.length}
+                {(currentIndexes[issue._id] || 0) + 1}/
+                {issue
+                .issue_images.length}
               </div>
             </div>
             {/* Issue Details */}
@@ -252,7 +211,7 @@ function CardIssues() {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <button
+                  {/* <button
                     onClick={() =>
                       mutateUpdate({
                         issues: element._id,
@@ -261,8 +220,9 @@ function CardIssues() {
                     }
                   >
                     <AiFillLike />
-                  </button>
-                  <span>{element.employees?.employeeName}</span>
+                  </button> */}
+                  <span>{issue.employees?.employeeName}</span>
+          
                 </div>
               </div>
 
@@ -270,7 +230,7 @@ function CardIssues() {
               <div className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600">
                 {/* <h3 className="text-base font-bold text-amber-900"> */}
                 <h3 className="text-base font-bold text-amber-900">
-                  {element.issue_description}
+                  {issue.issue_description}
                 </h3>
               </div>
 
