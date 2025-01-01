@@ -6,9 +6,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const ActionContext = createContext();
 
 function ActionProvider({ children }) {
-
-
+  
   const [iss, setIss] = useState(null);
+  const [emp, setEmp] = useState(null);
 
   const quaryClient = useQueryClient();
   const { mutate: mutateUpdate } = useMutation({
@@ -38,12 +38,20 @@ function ActionProvider({ children }) {
     setIss(issue);
   }
 
+  function handleEditEmployee(employee) {
+    document.getElementById("employee_modal").showModal();
+    setEmp(employee);
+  }
+
   const value = {
     mutateUpdate,
     mutateMyIssue,
     issues,
+    setIss,
     handleEditIssue,
     iss,
+    handleEditEmployee,
+    emp,
   };
 
   return (
