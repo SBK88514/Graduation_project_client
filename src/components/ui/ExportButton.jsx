@@ -1,22 +1,24 @@
-import React from 'react'
+import React from "react";
 import { AiOutlineExport } from "react-icons/ai";
 
 function ExportButton({ download }) {
   return (
     <div className="tooltip" data-tip="Export To XL">
-        <button
+      <button
         onClick={download}
-         type="button" 
-         class="text-white bg-blue-700 hover:bg-blue-800 
-         focus:ring-4 focus:ring-blue-300 font-medium rounded-lg 
-         text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 
-         dark:hover:bg-blue-700 focus:outline-none 
-         dark:focus:ring-blue-800">
-            <AiOutlineExport />
-            </button>
-
+        type="button"
+        className="flex items-center justify-center p-2.5 
+           bg-amber-500 via-amber-600 to-amber-300
+           text-white rounded-xl 
+           hover:from-amber-600 hover:via-amber-700 hover:to-amber-400
+           focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
+           transition-all duration-300 hover:scale-105
+           shadow-lg hover:shadow-xl"
+      >
+        <AiOutlineExport className="w-5 h-5" />
+      </button>
     </div>
-  )
+  );
 }
 
-export default ExportButton
+export default ExportButton;

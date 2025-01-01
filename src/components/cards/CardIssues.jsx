@@ -3,17 +3,17 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
-import { exportToXL } from "../../lib";
-import { AiFillLike } from "react-icons/ai";
+import { exportToXL } from "../../lib/index.jsx";
 import { AuthContext } from "../contexts/AuthContext.jsx";
 import SearchInput from "../pages/publicPages/SearchInput.jsx";
 import UseSuggestions from "../hooks/UseSuggestions.jsx";
 import { ChevronDown, Filter } from "lucide-react";
-
-
+import Button from "../ui/ButtonAddIssue.jsx";
+import SelectBox from "../pages/forms/SelectBox.jsx";
+import { ImUserPlus } from "react-icons/im";
 
 function CardIssues() {
-  const { mutateUpdate } = useContext(ActionContext);
+  const { mutateUpdate, handleEditIssue } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
   console.log(user);
   const idProfession = user.employeeId;
@@ -24,6 +24,7 @@ function CardIssues() {
     queryFn: async () =>
       await axios.get(`/issues/allissuesbyprofession/${idProfession}`),
     select: (data) => data.data.data,
+    // להכניס טוסטים
   });
   console.log(data);
 
@@ -56,9 +57,9 @@ function CardIssues() {
       [issueId]: prev[issueId] === 0 ? maxLength - 1 : (prev[issueId] || 0) - 1,
     }));
   };
-   // search input issues
-   const [suggestions, setSearchInput] = UseSuggestions("issues");
-   const [selected, setSelected] = useState(null);
+  // search input issues
+  const [suggestions, setSearchInput] = UseSuggestions("issues");
+  const [selected, setSelected] = useState(null);
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
@@ -71,10 +72,10 @@ function CardIssues() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8  ">
-    
-      <ExportButton download={downloadXl} />
-      <SearchInput
+    <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
+      <div className=" bg-white border-solid border-2 border-amber-300  my-auto p-4 shadow-md rounded-xl mb-6 animate-slide-down flex flex-wrap gap-4 items-center justify-between">
+        <ExportButton download={downloadXl} />
+        <SearchInput
           setSearchInput={setSearchInput}
           suggestions={suggestions}
           suggestionKey={"issue_apartment"}
@@ -97,9 +98,50 @@ function CardIssues() {
             <span>Filter</span>
             <ChevronDown className="w-4 h-4" />
           </button>
+          <Button name="Add" />
         </div>
-          {/* <Button name="Add New Issue" /> */}
-      <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
+        <div>
+          <select
+            className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            id="status"
+            name="issue_status"
+            onChange={(e) => setStatusFilterStatus(e.target.value)}
+          >
+            <option value="">Filter Status</option>
+            <option value="all">All</option>
+            <option value="New">New</option>
+            <option value="In process">In process</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+
+        <div>
+          <select
+            className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            id="urgency"
+            name="issue_urgency"
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="">Filter Urgency</option>
+            <option value="all">All</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div>
+          <SelectBox
+            // value={professionFilter || "all"}
+            // handleChange={(e) => setProfessionFilter(e.target.value)}
+            // onChange={(value) => setProfessionFilter(value.profession_name)}
+            placeholder="Select Profession"
+            id={"profession_name"}
+          />
+        </div>
+      </div>
+      {/* <Button name="Add New Issue" /> */}
+      <div className="flex flex-wrap gap-4 justify-evenly">
         {/* Issue Card */}
         {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>}
@@ -236,7 +278,7 @@ function CardIssues() {
               {/* <div className="flex items-center justify-between mb-3"> */}
               <div className="flex items-center justify-between mb-3">
                 <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
-                  In Progress
+                  {element.issue_status}
                 </span>
                 <div className="flex items-center space-x-1 text-amber-600">
                   <svg
@@ -246,10 +288,10 @@ function CardIssues() {
                     stroke="currentColor"
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    //   strokeLinecap="round"
+                    //   strokeLinejoin="round"
+                    //   strokeWidth={2}
+                    //   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
                   <button
@@ -260,7 +302,7 @@ function CardIssues() {
                       })
                     }
                   >
-                    <AiFillLike />
+                    <ImUserPlus title="Handle the problem" />
                   </button>
                   <span>{element.employees?.employeeName}</span>
                 </div>
@@ -292,11 +334,14 @@ function CardIssues() {
                     </svg>
                   </span>
                   <span className="text-xs font-medium text-red-600">
-                    Urgent
+                    {element.issue_urgency}
                   </span>
                 </div>
 
-                <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                <button
+                  onClick={() => handleEditIssue(element)}
+                  className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium"
+                >
                   Update
                 </button>
               </div>
