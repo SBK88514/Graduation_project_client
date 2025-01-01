@@ -44,20 +44,21 @@ function AuthProvider({ children }) {
     authUser();
   }, []);
 
-
-  // async function signOut() {
-  //   try {
-  //     const { data } = await axios.get("/users/manager/logout");
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async function signOut() {
+    try {
+      const { data } = await axios.get("/users/manager/logout");
+      setIsAuth(false);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const value = {
     handleLogin,
     user,
     isAuth,
+    signOut,
   };
 
   return (

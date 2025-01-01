@@ -8,13 +8,15 @@ export const ActionContext = createContext();
 function ActionProvider({ children }) {
   
   const [iss, setIss] = useState(null);
+  const [emp, setEmp] = useState(null);
+
   const quaryClient = useQueryClient();
   const { mutate: mutateUpdate } = useMutation({
     mutationKey: ["update_issue"],
     mutationFn: async (idEmpIss) => axios.put("/issues/updateissue", idEmpIss),
     onSuccess: () => {
       quaryClient.invalidateQueries({ queryKey: ["get_issues"] });
-     
+
     },
     onError: () => {},
   });
@@ -36,6 +38,11 @@ function ActionProvider({ children }) {
     setIss(issue);
   }
 
+  function handleEditEmployee(employee) {
+    document.getElementById("employee_modal").showModal();
+    setEmp(employee);
+  }
+
   const value = {
     mutateUpdate,
     mutateMyIssue,
@@ -43,6 +50,8 @@ function ActionProvider({ children }) {
     setIss,
     handleEditIssue,
     iss,
+    handleEditEmployee,
+    emp,
   };
 
   return (

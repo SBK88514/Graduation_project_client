@@ -11,6 +11,7 @@ import { AuthContext } from "./components/contexts/AuthContext";
 import Navbar from "./components/section/Navbar";
 import ButtonAddIssue from "./components/ui/ButtonAddIssue";
 import IssueModal from "./components/modal/IssueModal";
+import EmployeeModal from "./components/modal/employeeModal";
 
 function ProtectedRoute({ isAuth }) {
   return isAuth ? <Outlet /> : <Navigate to="/" replace />;
@@ -30,6 +31,7 @@ function Root({ isAuth }) {
       )}
       <Outlet />
       <IssueModal />
+      <EmployeeModal />
     </>
   );
 }
@@ -79,6 +81,13 @@ function App() {
             path="allissues"
             lazy={async () => ({
               Component: (await import("./components/cards/CardIssues"))
+                .default,
+            })}
+          />
+          <Route
+            path="myissuehistory"
+            lazy={async () => ({
+              Component: (await import("./components/cards/MyIssuesHistory"))
                 .default,
             })}
           />
