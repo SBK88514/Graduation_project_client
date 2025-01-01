@@ -14,12 +14,11 @@ import { ImUserPlus } from "react-icons/im";
 
 
 function CardIssues() {
-  
+
   const { mutateUpdate, handleEditIssue } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
-  console.log(user);
   const idProfession = user.employeeId;
-  console.log(idProfession);
+ 
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_issues"],
@@ -28,9 +27,7 @@ function CardIssues() {
     select: (data) => data.data.data,
     // להכניס טוסטים
   });
-  console.log(data);
-
-
+  
   const [currentIndexes, setCurrentIndexes] = useState({});
   const nextImage = (issueId, maxLength) => {
     setCurrentIndexes((prev) => ({

@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const ActionContext = createContext();
 
 function ActionProvider({ children }) {
+  
   const [iss, setIss] = useState(null);
   const [emp, setEmp] = useState(null);
 
@@ -15,6 +16,7 @@ function ActionProvider({ children }) {
     mutationFn: async (idEmpIss) => axios.put("/issues/updateissue", idEmpIss),
     onSuccess: () => {
       quaryClient.invalidateQueries({ queryKey: ["get_issues"] });
+
     },
     onError: () => {},
   });
@@ -45,6 +47,7 @@ function ActionProvider({ children }) {
     mutateUpdate,
     mutateMyIssue,
     issues,
+    setIss,
     handleEditIssue,
     iss,
     handleEditEmployee,
