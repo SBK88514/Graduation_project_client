@@ -12,10 +12,8 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  const {mutateMyIssue} = useContext(ActionContext)
+  const { mutateMyIssue } = useContext(ActionContext);
   console.log(user);
-
-
 
   return (
     <>
@@ -40,18 +38,24 @@ const Navbar = () => {
                 Add Issue
               </NavLink>
               <NavLink
-             
                 to="/allissues"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 All Issues
               </NavLink>
+
               <NavLink
-              onClick={() => mutateMyIssue({id: user._id})}
+                onClick={() => mutateMyIssue({ id: user._id })}
                 to="/myissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 My Issues
+              </NavLink>
+              <NavLink
+                to="/myissuehistory"
+                className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                My Issues History
               </NavLink>
             </div>
 
@@ -117,7 +121,6 @@ const Navbar = () => {
             className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out ${
               isSidebarOpen ? "opacity-100" : "opacity-0"
             }`}
-           
           />
 
           {/* Sidebar */}
@@ -125,10 +128,7 @@ const Navbar = () => {
             <div className="flex flex-col w-full max-w-md mx-auto p-4">
               {/* Close button */}
               <div className="flex justify-end p-4">
-                <button
-                 
-                  className="text-gray-500 hover:text-gray-700"
-                >
+                <button className="text-gray-500 hover:text-gray-700">
                   <X className="h-6 w-6" />
                 </button>
               </div>

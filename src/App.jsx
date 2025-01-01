@@ -70,14 +70,20 @@ function App() {
           <Route
             path="myissue"
             lazy={async () => ({
-              Component: (await import("./components/cards/MyIssues"))
-                .default,
+              Component: (await import("./components/cards/MyIssues")).default,
             })}
           />
           <Route
             path="allissues"
             lazy={async () => ({
               Component: (await import("./components/cards/CardIssues"))
+                .default,
+            })}
+          />
+          <Route
+            path="myissuehistory"
+            lazy={async () => ({
+              Component: (await import("./components/cards/MyIssuesHistory"))
                 .default,
             })}
           />

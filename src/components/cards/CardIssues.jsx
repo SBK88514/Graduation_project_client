@@ -10,8 +10,6 @@ import SearchInput from "../pages/publicPages/SearchInput.jsx";
 import UseSuggestions from "../hooks/UseSuggestions.jsx";
 import { ChevronDown, Filter } from "lucide-react";
 
-
-
 function CardIssues() {
   const { mutateUpdate } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
@@ -27,20 +25,6 @@ function CardIssues() {
   });
   console.log(data);
 
-  // console.log(Allissues)
-  // const [page, setPage] = useState(1);
-  // const [limit] = useState(3);
-
-  // const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
-
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryKey: ["get_issues", page],
-  //   queryFn: async () => (await axios.get(url)).data,
-  //   select: (data) => ({
-  //     Allissues: data.data,
-  //     count: data.count,
-  //   }),
-  // });
 
   const [currentIndexes, setCurrentIndexes] = useState({});
   const nextImage = (issueId, maxLength) => {
@@ -56,9 +40,9 @@ function CardIssues() {
       [issueId]: prev[issueId] === 0 ? maxLength - 1 : (prev[issueId] || 0) - 1,
     }));
   };
-   // search input issues
-   const [suggestions, setSearchInput] = UseSuggestions("issues");
-   const [selected, setSelected] = useState(null);
+  // search input issues
+  const [suggestions, setSearchInput] = UseSuggestions("issues");
+  const [selected, setSelected] = useState(null);
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
@@ -72,33 +56,30 @@ function CardIssues() {
 
   return (
     <div className="container mx-auto px-4 py-8  ">
-    
       <ExportButton download={downloadXl} />
       <SearchInput
-          setSearchInput={setSearchInput}
-          suggestions={suggestions}
-          suggestionKey={"issue_apartment"}
-          onClick={(current) => {
-            setSelected(current);
-          }}
-        />
+        setSearchInput={setSearchInput}
+        suggestions={suggestions}
+        suggestionKey={"issue_apartment"}
+        onClick={(current) => {
+          setSelected(current);
+        }}
+      />
 
-        <div className="flex-1 text-center">
-          <h1 className="text-2xl font-bold text-amber-900">
-            Issues Management
-          </h1>
-        </div>
-        <div className="flex gap-3">
-          <button
-            className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
+      <div className="flex-1 text-center">
+        <h1 className="text-2xl font-bold text-amber-900">Issues Management</h1>
+      </div>
+      <div className="flex gap-3">
+        <button
+          className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
                          hover:bg-amber-200 transition-all duration-200"
-          >
-            <Filter className="w-3 h-3" />
-            <span>Filter</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
-        </div>
-          {/* <Button name="Add New Issue" /> */}
+        >
+          <Filter className="w-3 h-3" />
+          <span>Filter</span>
+          <ChevronDown className="w-4 h-4" />
+        </button>
+      </div>
+      {/* <Button name="Add New Issue" /> */}
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
         {isLoading && <div>Loading...</div>}
@@ -252,6 +233,7 @@ function CardIssues() {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
+                  <span>{element.issue_profession?.profession_name}</span>
                   <button
                     onClick={() =>
                       mutateUpdate({
