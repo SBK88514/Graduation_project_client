@@ -12,12 +12,13 @@ import Button from "../ui/ButtonAddIssue.jsx";
 import SelectBox from "../pages/forms/SelectBox.jsx";
 import { ImUserPlus } from "react-icons/im";
 
+
 function CardIssues() {
+
   const { mutateUpdate, handleEditIssue } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
-  console.log(user);
   const idProfession = user.employeeId;
-  console.log(idProfession);
+ 
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_issues"],
@@ -26,23 +27,7 @@ function CardIssues() {
     select: (data) => data.data.data,
     // להכניס טוסטים
   });
-  console.log(data);
-
-  // console.log(Allissues)
-  // const [page, setPage] = useState(1);
-  // const [limit] = useState(3);
-
-  // const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
-
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryKey: ["get_issues", page],
-  //   queryFn: async () => (await axios.get(url)).data,
-  //   select: (data) => ({
-  //     Allissues: data.data,
-  //     count: data.count,
-  //   }),
-  // });
-
+  
   const [currentIndexes, setCurrentIndexes] = useState({});
   const nextImage = (issueId, maxLength) => {
     setCurrentIndexes((prev) => ({
@@ -72,6 +57,9 @@ function CardIssues() {
   }
 
   return (
+
+      
+    
     <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
       <div className=" bg-white border-solid border-2 border-amber-300  my-auto p-4 shadow-md rounded-xl mb-6 animate-slide-down flex flex-wrap gap-4 items-center justify-between">
         <ExportButton download={downloadXl} />
@@ -84,15 +72,14 @@ function CardIssues() {
           }}
         />
 
-        <div className="flex-1 text-center">
-          <h1 className="text-2xl font-bold text-amber-900">
-            Issues Management
-          </h1>
-        </div>
-        <div className="flex gap-3">
-          <button
-            className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
+      <div className="flex-1 text-center">
+        <h1 className="text-2xl font-bold text-amber-900">Issues Management</h1>
+      </div>
+      <div className="flex gap-3">
+        <button
+          className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
                          hover:bg-amber-200 transition-all duration-200"
+
           >
             <Filter className="w-3 h-3" />
             <span>Filter</span>
@@ -294,6 +281,7 @@ function CardIssues() {
                     //   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
+                  <span>{element.issue_profession?.profession_name}</span>
                   <button
                     onClick={() =>
                       mutateUpdate({

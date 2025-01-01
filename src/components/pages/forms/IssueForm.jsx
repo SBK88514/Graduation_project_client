@@ -3,10 +3,13 @@ import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SelectBox from "./SelectBox";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { date } from "yup";
 import { showErrorToast, showSuccessToast } from "../../../lib/Toast";
+// import transporter from "../../../../../GP_server/service/nodemailer.service";
+
+
 
 const initialValues = {
   issue_building: "",
@@ -27,12 +30,24 @@ function IssueForm() {
     mutationKey: ["edit issue"],
     mutationFn: async ({ values, id }) =>
       await axios.put(`issues/update/${id}`, values),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data)
+      // if (data.data.data.issue_status === "Done") {
+      //   transporter.sendMail({
+      //     from: "biton123654@gmail.com",
+      //     to: `biton123654@gmail.com`,
+      //     subject: "Hello ✔",
+      //     text: "Hello world?",
+      //     html: "<div> I finished the work successfully, please check if everything is in order</div>"
+      //   })
+      // }
       document.getElementById("issue_modal").close();
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
       showSuccessToast("Issue updated successfully");
       setIss(null);
     },
+
+    
     onError: (error) => {
       console.error(
         "Error adding issue:",
@@ -52,6 +67,7 @@ function IssueForm() {
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
       showSuccessToast("Issue added successfully");
       // setUploadedFiles([]);
+
       setIss(null);
       navigate("/allissues");
     },
@@ -60,7 +76,7 @@ function IssueForm() {
         "Error adding issue:",
         error.response?.data || error.message
       );
-      //   showErrorToast("Error adding issue");
+        showErrorToast("Error adding issue");
     },
   });
 
@@ -139,7 +155,7 @@ function IssueForm() {
                   value={values?.issue_building}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                 >
                   <option value="">Select Building</option>
                   <option value="A">Building A</option>
@@ -162,7 +178,7 @@ function IssueForm() {
                   value={values?.issue_floor}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                 >
                   <option value="">Select Floor</option>
                   <option value="1">1st Floor</option>
@@ -187,7 +203,7 @@ function IssueForm() {
                   value={values?.issue_apartment}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                   placeholder="Enter apartment number"
                   className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
@@ -200,19 +216,11 @@ function IssueForm() {
                 >
                   Profession
                 </label>
-                {!iss ? (
                   <SelectBox
-                    value={values?.issue_profession}
+                    value={values?.issue_profession._id || values?.issue_profession}
                     handleChange={handleChange}
                     id={"issue_profession"}
                   />
-                ) : (
-                  <input
-                    disabled={!!iss}
-                    value={values?.issue_profession?.profession_name}
-                    className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  />
-                )}
               </div>
               {/* Urgency Selection */}
               <div>

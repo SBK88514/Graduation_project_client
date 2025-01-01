@@ -95,6 +95,13 @@ function App() {
                 .default,
             })}
           />
+          <Route
+            path="myissuehistory"
+            lazy={async () => ({
+              Component: (await import("./components/cards/MyIssuesHistory"))
+                .default,
+            })}
+          />
         </Route>
         <Route
           path="LeadershipTeam"

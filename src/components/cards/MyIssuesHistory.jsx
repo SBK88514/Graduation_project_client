@@ -1,13 +1,23 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import ExportButton from "../ui/ExportButton.jsx";
 import { exportToXL } from "../../lib";
-import { ActionContext } from "../contexts/ActionContext.jsx";
 import { AuthContext } from "../contexts/AuthContext.jsx";
 
-function CardIssues() {
+function MyIssuesHistory() {
   const { user } = useContext(AuthContext);
+
   console.log(user);
- 
+  const idEmployee = user._id;
+  console.log(idEmployee)
+
+  const { data } = useQuery({
+    queryKey: ["get_my_history"],
+    queryFn: async () =>
+      await axios.get(`/issues/gethistorybyid/${idEmployee}`),
+    select: (data) => data.data.data,
+  });
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -35,10 +45,6 @@ function CardIssues() {
     exportToXL(result, "IssuesSheet");
   }
 
-  const { issues, handleEditIssue } = useContext(ActionContext)
-
-
-
   return (
     <div className="container mx-auto px-4 py-8  ">
       <ExportButton download={downloadXl} />
@@ -46,7 +52,7 @@ function CardIssues() {
         {/* Issue Card */}
         {/* {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>} */}
-        {issues?.map((issue) => (
+        {data?.map((issue) => (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
             {/* Location Pills */}
             <div className="flex space-x-2 mb-3">
@@ -145,11 +151,7 @@ function CardIssues() {
                 </svg>
               </button>
               <button
-
-                onClick={() =>
-                  nextImage(issue?._id, issue?.issue_images.length)
-                }
-
+                onClick={() => nextImage(issue._id, issue.issue_images.length)}
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
                 <svg
@@ -197,7 +199,6 @@ function CardIssues() {
                   </svg>
 
                   <span>{issue.employees?.employeeName}</span>
-                  <span>{issue.employees?.issue_profession?.profession_name}</span> 
                 </div>
               </div>
 
@@ -231,21 +232,16 @@ function CardIssues() {
                   </span>
                 </div>
 
-                <button 
-                onClick={() => handleEditIssue(issue)}
-                className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
                   Update
                 </button>
               </div>
             </div>
           </div>
         ))}
-
-       
       </div>
-    
     </div>
   );
 }
 
-export default CardIssues;
+export default MyIssuesHistory;

@@ -7,6 +7,7 @@ import { showErrorToast, showSuccessToast } from "../../lib/Toast";
 export const ActionContext = createContext();
 
 function ActionProvider({ children }) {
+  
   const [iss, setIss] = useState(null);
   const [emp, setEmp] = useState(null);
 
@@ -20,6 +21,8 @@ function ActionProvider({ children }) {
     },
     onError: () => {
       showErrorToast("Failed to update issue"); //TODO adding the real message
+
+
     },
   });
   const [issues, setIssues] = useState(null);
@@ -49,6 +52,7 @@ function ActionProvider({ children }) {
     mutateUpdate,
     mutateMyIssue,
     issues,
+    setIss,
     handleEditIssue,
     iss,
     handleEditEmployee,
