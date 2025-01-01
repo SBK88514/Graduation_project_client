@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { showErrorToast, showSuccessToast } from "../../lib/Toast";
 
 export const ActionContext = createContext();
 
@@ -15,8 +16,11 @@ function ActionProvider({ children }) {
     mutationFn: async (idEmpIss) => axios.put("/issues/updateissue", idEmpIss),
     onSuccess: () => {
       quaryClient.invalidateQueries({ queryKey: ["get_issues"] });
+      showSuccessToast("issue successfully associated"); //TODO adding the real message
     },
-    onError: () => {},
+    onError: () => {
+      showErrorToast("Failed to update issue"); //TODO adding the real message
+    },
   });
   const [issues, setIssues] = useState(null);
   const { mutate: mutateMyIssue } = useMutation({

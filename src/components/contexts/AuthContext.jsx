@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-// import { showSuccessToast, showErrorToast } from "../../lib/Toast";
+import { showSuccessToast, showErrorToast } from "../../lib/Toast";
 import ActionProvider from "./ActionContext";
 
 export const AuthContext = createContext();
@@ -14,10 +14,10 @@ function AuthProvider({ children }) {
     try {
       const { data } = await axios.post("/users/employee/signin", values);
       if (data.success) {
-        // showSuccessToast(data.message);
+        showSuccessToast("Signed-in user:", data?.data?.employeeName); //TODO not working
+        console.log("Signed-in user:", data.data.employeeName);
         setIsAuth(true);
         setUser(data.data);
-        console.log("Signed-in user:", data.data);
         return true;
       }
     } catch (error) {
@@ -49,8 +49,10 @@ function AuthProvider({ children }) {
       const { data } = await axios.get("/users/manager/logout");
       setIsAuth(false);
       console.log(data);
+      showSuccessToast(data.message);
     } catch (error) {
       console.log(error);
+      showErrorToast(error.response.data.error);
     }
   }
 
