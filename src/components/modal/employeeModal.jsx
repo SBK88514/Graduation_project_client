@@ -7,14 +7,14 @@ function EmployeeModal() {
     <dialog id="employee_modal" className="modal">
       <div className="modal-box p-0">
         {/* Exit Btn */}
-        <div>
+        {/* <div>
           <button
             onClick={() => document.getElementById("employee_modal").close()}
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           >
             ✕
           </button>
-        </div>
+        </div> */}
 
         <EditEmployeeForm />
       </div>

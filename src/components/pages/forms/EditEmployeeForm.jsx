@@ -3,6 +3,7 @@ import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SelectBox from "./SelectBox";
+import { showErrorToast, showSuccessToast } from "../../../lib/Toast";
 
 const initialValues = {
   employeeName: "",
@@ -26,8 +27,12 @@ function EditEmployeeForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_employees"] });
       document.getElementById("employee_modal").close();
+      showSuccessToast("Profile updated successfully");
     },
-    // onError:
+    onError: () => {
+      document.getElementById("employee_modal").close();
+      showErrorToast("Failed to update profile");
+    },
   });
   const { mutate: addMutate } = useMutation({
     mutationKey: ["add_employee"],

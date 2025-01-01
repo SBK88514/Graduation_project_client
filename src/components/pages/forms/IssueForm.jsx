@@ -5,7 +5,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SelectBox from "./SelectBox";
 import { data, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
+import { date } from "yup";
+import { showErrorToast, showSuccessToast } from "../../../lib/Toast";
 // import transporter from "../../../../../GP_server/service/nodemailer.service";
+
 
 
 const initialValues = {
@@ -40,9 +43,19 @@ function IssueForm() {
       // }
       document.getElementById("issue_modal").close();
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
+      showSuccessToast("Issue updated successfully");
       setIss(null);
     },
-   
+
+    
+    onError: (error) => {
+      console.error(
+        "Error adding issue:",
+        error.response?.data || error.message
+      );
+      document.getElementById("issue_modal").close();
+      showErrorToast("Error updating issue");
+    },
   });
 
   const { mutate: addMutate } = useMutation({
@@ -52,6 +65,9 @@ function IssueForm() {
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
+      showSuccessToast("Issue added successfully");
+      // setUploadedFiles([]);
+
       setIss(null);
       navigate("/allissues");
     },
@@ -60,6 +76,7 @@ function IssueForm() {
         "Error adding issue:",
         error.response?.data || error.message
       );
+        showErrorToast("Error adding issue");
     },
   });
 

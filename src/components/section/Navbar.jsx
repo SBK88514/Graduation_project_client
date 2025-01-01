@@ -20,9 +20,9 @@ const Navbar = () => {
             {/* Logo */}
             <a href="/welcomepage" className="flex-shrink-0">
               <img
-                src="https://res.cloudinary.com/dp08vd3cy/image/upload/v1733785970/logo_lhjqzl.jpg"
+                src="https://res.cloudinary.com/dl8slx4ca/image/upload/v1735766284/cromi0bys1fd2k7q7dgl.png"
                 alt="Logo"
-                className="h-10 w-auto rounded"
+                className="w-44 rounded"
               />
             </a>
 
@@ -125,20 +125,28 @@ const Navbar = () => {
               {/* Close button */}
               <div className="flex justify-end p-4">
                 <button className="text-gray-500 hover:text-gray-700">
-                  <X className="h-6 w-6" />
+                  <X
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="h-6 w-6"
+                  />
                 </button>
               </div>
 
               {/* Mobile navigation links */}
               <div className="px-4 py-2">
                 <NavLink
+                  onClick={() => setIsSidebarOpen(false)}
                   to="/allissues"
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
                 >
                   All Issues
                 </NavLink>
                 <NavLink
-                  to="/myissues"
+                  onClick={() => {
+                    mutateMyIssue({ id: user._id });
+                    setIsSidebarOpen(false);
+                  }}
+                  to="/myissue"
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
                 >
                   My Issues
@@ -157,14 +165,17 @@ const Navbar = () => {
                     </span>
                   </div>
                   <button
-                    // onClick={() => handleEditManager(user)}
+                    onClick={() => {
+                      handleEditEmployee(user);
+                      setIsSidebarOpen(false);
+                    }}
                     className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Profile
                   </button>
                   <button
-                    // onClick={handleSignOut}
+                    onClick={() => signOut()}
                     className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                   >
                     <LogOut className="h-4 w-4 mr-2" />
