@@ -1,7 +1,4 @@
-// זה הסיידבאר מלמעלה
-
 import React, { useState } from "react";
-
 import { Menu, X, User, LogOut, Link } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
@@ -11,9 +8,8 @@ import { ActionContext } from "../contexts/ActionContext";
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user } = useContext(AuthContext);
-  const { mutateMyIssue } = useContext(ActionContext);
-  console.log(user);
+  const { user, signOut } = useContext(AuthContext);
+  const { mutateMyIssue, handleEditEmployee } = useContext(ActionContext);
 
   return (
     <>
@@ -70,7 +66,7 @@ const Navbar = () => {
                     <User className="h-5 w-5 text-white" />
                   </div>
                   <span className="font-medium text-sm text-white">
-                    {/* {user.manager_name} */}
+                    {user?.employeeName}
                   </span>
                 </button>
 
@@ -78,14 +74,14 @@ const Navbar = () => {
                 {isDropdownOpen && (
                   <div className="absolute right-4 mt-2 w-48 bg-amber-100 rounded-xl shadow-lg py-1 z-50">
                     <button
-                      // onClick={() => handleEditManager(user)}
+                      onClick={() => handleEditEmployee(user)}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <User className="h-4 w-4 mr-2" />
                       Profile
                     </button>
                     <button
-                      // onClick={handleSignOut}
+                      onClick={() => signOut()}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       <LogOut className="h-4 w-4 mr-2" />

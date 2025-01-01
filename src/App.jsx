@@ -10,6 +10,8 @@ import { useContext } from "react";
 import { AuthContext } from "./components/contexts/AuthContext";
 import Navbar from "./components/section/Navbar";
 import ButtonAddIssue from "./components/ui/ButtonAddIssue";
+import IssueModal from "./components/modal/IssueModal";
+import EmployeeModal from "./components/modal/employeeModal";
 
 function ProtectedRoute({ isAuth }) {
   return isAuth ? <Outlet /> : <Navigate to="/" replace />;
@@ -28,6 +30,8 @@ function Root({ isAuth }) {
         <Navigate to={"login"} />
       )}
       <Outlet />
+      <IssueModal />
+      <EmployeeModal />
     </>
   );
 }
@@ -63,7 +67,7 @@ function App() {
           <Route
             path="addissue"
             lazy={async () => ({
-              Component: (await import("./components/pages/forms/AddIssueForm"))
+              Component: (await import("./components/pages/forms/IssueForm"))
                 .default,
             })}
           />
