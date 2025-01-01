@@ -34,7 +34,10 @@ function CardIssues() {
 
     exportToXL(result, "IssuesSheet");
   }
-  const { issues } = useContext(ActionContext);
+
+  const { issues, handleEditIssue } = useContext(ActionContext)
+
+
 
   return (
     <div className="container mx-auto px-4 py-8  ">
@@ -142,7 +145,11 @@ function CardIssues() {
                 </svg>
               </button>
               <button
-                onClick={() => nextImage(issue._id, issue.issue_images.length)}
+
+                onClick={() =>
+                  nextImage(issue?._id, issue?.issue_images.length)
+                }
+
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
                 <svg
@@ -224,7 +231,9 @@ function CardIssues() {
                   </span>
                 </div>
 
-                <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                <button 
+                onClick={() => handleEditIssue(issue)}
+                className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
                   Update
                 </button>
               </div>

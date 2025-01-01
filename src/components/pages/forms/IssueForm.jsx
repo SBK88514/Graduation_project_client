@@ -138,7 +138,7 @@ function IssueForm() {
                   value={values?.issue_building}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                 >
                   <option value="">Select Building</option>
                   <option value="A">Building A</option>
@@ -186,7 +186,7 @@ function IssueForm() {
                   value={values?.issue_apartment}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                   placeholder="Enter apartment number"
                   className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
@@ -199,19 +199,11 @@ function IssueForm() {
                 >
                   Profession
                 </label>
-                {!iss ? (
                   <SelectBox
-                    value={values?.issue_profession}
+                    value={values?.issue_profession._id || values?.issue_profession}
                     handleChange={handleChange}
                     id={"issue_profession"}
                   />
-                ) : (
-                  <input
-                    disabled={!!iss}
-                    value={values?.issue_profession?.profession_name}
-                    className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  />
-                )}
               </div>
               {/* Urgency Selection */}
               <div>
