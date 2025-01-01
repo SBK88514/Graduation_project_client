@@ -10,7 +10,6 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user, signOut } = useContext(AuthContext);
   const { mutateMyIssue, handleEditEmployee } = useContext(ActionContext);
-  console.log(user);
 
   return (
     <>
@@ -40,12 +39,19 @@ const Navbar = () => {
               >
                 All Issues
               </NavLink>
+
               <NavLink
                 onClick={() => mutateMyIssue({ id: user._id })}
                 to="/myissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 My Issues
+              </NavLink>
+              <NavLink
+                to="/myissuehistory"
+                className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                My Issues History
               </NavLink>
             </div>
 

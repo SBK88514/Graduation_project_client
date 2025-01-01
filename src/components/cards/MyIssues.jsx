@@ -1,30 +1,13 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import Paginaiton from "../ui/Paginaiton.jsx";
 import ExportButton from "../ui/ExportButton.jsx";
 import { exportToXL } from "../../lib";
-import { AiFillLike } from "react-icons/ai";
-import { AuthContext } from "../contexts/AuthContext.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
+import { AuthContext } from "../contexts/AuthContext.jsx";
 
 function CardIssues() {
-//   const { mutateEmployeeIssues } = useContext(ActionContext);
-  const { user } = useContext(AuthContext)
-//   const [page, setPage] = useState(1);
-//   const [limit] = useState(3);
-
-
-//   const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
-
-//   const { data, isLoading, isError, error } = useQuery({
-//     queryKey: ["get_issues", page],
-//     queryFn: async () => (await axios.get(url)).data,
-//     select: (data) => ({
-//       Allissues: data.data,
-//       count: data.count,
-//     }),
-//   });
+  const { user } = useContext(AuthContext);
+  console.log(user);
+ 
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -51,8 +34,7 @@ function CardIssues() {
 
     exportToXL(result, "IssuesSheet");
   }
-  const {issues} = useContext(ActionContext)
-
+  const { issues } = useContext(ActionContext);
 
   return (
     <div className="container mx-auto px-4 py-8  ">
@@ -142,9 +124,7 @@ function CardIssues() {
 
               {/* Navigation Arrows */}
               <button
-                onClick={() =>
-                  prevImage(issue._id, issue.issue_images.length)
-                }
+                onClick={() => prevImage(issue._id, issue.issue_images.length)}
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
                 <svg
@@ -162,9 +142,7 @@ function CardIssues() {
                 </svg>
               </button>
               <button
-                onClick={() =>
-                  nextImage(issue._id, issue.issue_images.length)
-                }
+                onClick={() => nextImage(issue._id, issue.issue_images.length)}
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
                 <svg
@@ -185,8 +163,7 @@ function CardIssues() {
               {/* Image Counter */}
               <div className="absolute bottom-2 right-2 bg-white/10 backdrop-blur-md text-white px-3 py-0.5 rounded-full text-xs font-medium border border-white/20">
                 {(currentIndexes[issue._id] || 0) + 1}/
-                {issue
-                .issue_images.length}
+                {issue.issue_images.length}
               </div>
             </div>
             {/* Issue Details */}
@@ -211,18 +188,9 @@ function CardIssues() {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  {/* <button
-                    onClick={() =>
-                      mutateUpdate({
-                        issues: element._id,
-                        employees: user?._id,
-                      })
-                    }
-                  >
-                    <AiFillLike />
-                  </button> */}
+
                   <span>{issue.employees?.employeeName}</span>
-          
+                  <span>{issue.employees?.issue_profession?.profession_name}</span> 
                 </div>
               </div>
 
@@ -264,9 +232,9 @@ function CardIssues() {
           </div>
         ))}
 
-        {/* You can duplicate the card here for more issues */}
+       
       </div>
-      {/* <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} /> */}
+    
     </div>
   );
 }
