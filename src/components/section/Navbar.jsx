@@ -33,12 +33,12 @@ const Navbar = () => {
             </a>
 
             <div className="hidden md:flex space-x-8">
-              <NavLink
+              {/* <NavLink
                 to="/addissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Add Issue
-              </NavLink>
+              </NavLink> */}
               <NavLink
              
                 to="/allissues"

@@ -13,6 +13,8 @@ import SelectBox from "../pages/forms/SelectBox.jsx";
 import { ImUserPlus } from "react-icons/im";
 
 function CardIssues() {
+
+
   const { mutateUpdate, handleEditIssue } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
   console.log(user);
@@ -28,20 +30,7 @@ function CardIssues() {
   });
   console.log(data);
 
-  // console.log(Allissues)
-  // const [page, setPage] = useState(1);
-  // const [limit] = useState(3);
-
-  // const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
-
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryKey: ["get_issues", page],
-  //   queryFn: async () => (await axios.get(url)).data,
-  //   select: (data) => ({
-  //     Allissues: data.data,
-  //     count: data.count,
-  //   }),
-  // });
+ 
 
   const [currentIndexes, setCurrentIndexes] = useState({});
   const nextImage = (issueId, maxLength) => {

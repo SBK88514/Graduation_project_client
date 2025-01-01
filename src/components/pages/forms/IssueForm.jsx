@@ -3,9 +3,10 @@ import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SelectBox from "./SelectBox";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
-import { date } from "yup";
+// import transporter from "../../../../../GP_server/service/nodemailer.service";
+
 
 const initialValues = {
   issue_building: "",
@@ -26,11 +27,22 @@ function IssueForm() {
     mutationKey: ["edit issue"],
     mutationFn: async ({ values, id }) =>
       await axios.put(`issues/update/${id}`, values),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data)
+      // if (data.data.data.issue_status === "Done") {
+      //   transporter.sendMail({
+      //     from: "biton123654@gmail.com",
+      //     to: `biton123654@gmail.com`,
+      //     subject: "Hello ✔",
+      //     text: "Hello world?",
+      //     html: "<div> I finished the work successfully, please check if everything is in order</div>"
+      //   })
+      // }
       document.getElementById("issue_modal").close();
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
       setIss(null);
     },
+   
   });
 
   const { mutate: addMutate } = useMutation({
@@ -40,7 +52,6 @@ function IssueForm() {
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
-      // setUploadedFiles([]);
       setIss(null);
       navigate("/allissues");
     },
@@ -150,7 +161,7 @@ function IssueForm() {
                   value={values?.issue_floor}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                 >
                   <option value="">Select Floor</option>
                   <option value="1">1st Floor</option>
