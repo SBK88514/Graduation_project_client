@@ -25,7 +25,7 @@ const Navbar = () => {
                 className="w-44 rounded"
               />
             </a>
-            <span className="">Client</span> {/*TODO: delete this line*/}
+            
             <div className="hidden md:flex space-x-8">
               {/* <NavLink
                 to="/addissue"
