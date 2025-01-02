@@ -18,7 +18,7 @@ function NavPublic() {
               />
             </NavLink>
           </div>
-          <span className="">Client</span> {/*TODO: delete this line*/}
+
           {/* Center - Navigation Links */}
           <div className="hidden md:flex items-center justify-center space-x-12">
             <NavLink
