@@ -7,7 +7,6 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 function CardIssues() {
   const { user } = useContext(AuthContext);
   console.log(user);
- 
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -35,9 +34,7 @@ function CardIssues() {
     exportToXL(result, "IssuesSheet");
   }
 
-  const { issues, handleEditIssue } = useContext(ActionContext)
-
-
+  const { issues, handleEditIssue } = useContext(ActionContext);
 
   return (
     <div className="container mx-auto px-4 py-8  ">
@@ -145,11 +142,9 @@ function CardIssues() {
                 </svg>
               </button>
               <button
-
                 onClick={() =>
                   nextImage(issue?._id, issue?.issue_images.length)
                 }
-
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
                 <svg
@@ -179,7 +174,7 @@ function CardIssues() {
               {/* <div className="flex items-center justify-between mb-3"> */}
               <div className="flex items-center justify-between mb-3">
                 <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
-                  In Progress
+                  {issue.issue_status}
                 </span>
                 <div className="flex items-center space-x-1 text-amber-600">
                   <svg
@@ -197,7 +192,9 @@ function CardIssues() {
                   </svg>
 
                   <span>{issue.employees?.employeeName}</span>
-                  <span>{issue.employees?.issue_profession?.profession_name}</span> 
+                  <span>
+                    {issue.employees?.issue_profession?.profession_name}
+                  </span>
                 </div>
               </div>
 
@@ -227,23 +224,21 @@ function CardIssues() {
                     </svg>
                   </span>
                   <span className="text-xs font-medium text-red-600">
-                    Urgent
+                    {issue.issue_urgency}
                   </span>
                 </div>
 
-                <button 
-                onClick={() => handleEditIssue(issue)}
-                className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                <button
+                  onClick={() => handleEditIssue(issue)}
+                  className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium"
+                >
                   Update
                 </button>
               </div>
             </div>
           </div>
         ))}
-
-       
       </div>
-    
     </div>
   );
 }

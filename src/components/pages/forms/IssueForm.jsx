@@ -7,8 +7,6 @@ import { data, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { date } from "yup";
 import { showErrorToast, showSuccessToast } from "../../../lib/Toast";
-// import transporter from "../../../../../GP_server/service/nodemailer.service";
-
 
 
 const initialValues = {
@@ -31,23 +29,20 @@ function IssueForm() {
     mutationFn: async ({ values, id }) =>
       await axios.put(`issues/update/${id}`, values),
     onSuccess: (data) => {
-      console.log(data)
-      // if (data.data.data.issue_status === "Done") {
-      //   transporter.sendMail({
-      //     from: "biton123654@gmail.com",
-      //     to: `biton123654@gmail.com`,
-      //     subject: "Hello ✔",
-      //     text: "Hello world?",
-      //     html: "<div> I finished the work successfully, please check if everything is in order</div>"
-      //   })
-      // }
+      console.log(data);
       document.getElementById("issue_modal").close();
-      queryClient.invalidateQueries({ queryKey: ["get_issues"] });
+      queryClient.invalidateQueries({
+        queryKey: ["get_issues"],
+        
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["get_my_issues"],
+
+      });
       showSuccessToast("Issue updated successfully");
       setIss(null);
     },
 
-    
     onError: (error) => {
       console.error(
         "Error adding issue:",
@@ -76,7 +71,7 @@ function IssueForm() {
         "Error adding issue:",
         error.response?.data || error.message
       );
-        showErrorToast("Error adding issue");
+      showErrorToast("Error adding issue");
     },
   });
 
@@ -216,11 +211,13 @@ function IssueForm() {
                 >
                   Profession
                 </label>
-                  <SelectBox
-                    value={values?.issue_profession._id || values?.issue_profession}
-                    handleChange={handleChange}
-                    id={"issue_profession"}
-                  />
+                <SelectBox
+                  value={
+                    values?.issue_profession._id || values?.issue_profession
+                  }
+                  handleChange={handleChange}
+                  id={"issue_profession"}
+                />
               </div>
               {/* Urgency Selection */}
               <div>
