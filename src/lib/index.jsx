@@ -11,14 +11,26 @@ export function debounce(func, timeout = 1000) {
   };
 }
 
+function adjustColumnWidths(data) {
+  const wsCols = Object.keys(data[0]).map((key) => {
+    const maxWidth = Math.max(
+      key.length,
+      ...data.map((row) => (row[key] ? row[key].toString().length : 0))
+      );
+    return { wch: maxWidth + 1 };
+    });
+  return wsCols;
+  }
 
-export function exportToXL(json,exelName){
-  console.log(4);
-  
+
+export function exportToXL(json,exelName){ 
   // Generate XL Page
 const wb = XLSX.utils.book_new();
 // Convert Json To CheetSheet
 const ws = XLSX.utils.json_to_sheet(json)
+
+ws['!cols'] = adjustColumnWidths(json);
+
 // Create New Xl Page With Data
 XLSX.utils.book_append_sheet(wb,ws,exelName);
 XLSX.writeFile(wb,`${exelName}.xlsx`)
