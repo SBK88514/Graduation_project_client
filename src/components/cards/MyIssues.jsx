@@ -6,6 +6,7 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 
 function CardIssues() {
   const { user } = useContext(AuthContext);
+  const { getAllDetails } = useContext(ActionContext);
   console.log(user);
 
   const [currentIndexes, setCurrentIndexes] = useState({});
@@ -26,12 +27,25 @@ function CardIssues() {
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
-    console.log(result);
 
     if (!result) return;
-    console.log(3);
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "building": item.issue_building,
+        "floor": item.issue_floor,
+        "apartment": item.issue_apartment,
+        "description": item.issue_description,
+        "status": item.issue_status,
+        "urgency": item.issue_urgency,
+        "profession": item.issue_profession?.profession_name,
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,       
+      };
+    });
 
-    exportToXL(result, "IssuesSheet");
+
+    exportToXL(prepareDataForExcel, "IssuesSheet");
   }
 
   const { issues, handleEditIssue } = useContext(ActionContext);
@@ -177,7 +191,7 @@ function CardIssues() {
               {/* <div className="flex items-center justify-between mb-3"> */}
               <div className="flex items-center justify-between mb-3">
                 <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
-                  In Progress
+                  {issue.issue_status}
                 </span>
                 <div className="flex items-center space-x-1 text-amber-600">
                   <svg
@@ -227,7 +241,7 @@ function CardIssues() {
                     </svg>
                   </span>
                   <span className="text-xs font-medium text-red-600">
-                    Urgent
+                    {issue.issue_urgency}
                   </span>
                 </div>
 

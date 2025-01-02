@@ -48,6 +48,17 @@ function ActionProvider({ children }) {
     setEmp(employee);
   }
 
+  async function getAllDetails(url) {
+    try {
+      const { data } = (await axios.get(url)).data;
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   const value = {
     mutateUpdate,
     mutateMyIssue,
@@ -57,6 +68,7 @@ function ActionProvider({ children }) {
     iss,
     handleEditEmployee,
     emp,
+    getAllDetails,
   };
 
   return (
