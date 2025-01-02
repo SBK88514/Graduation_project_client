@@ -46,10 +46,20 @@ function EditEmployeeForm() {
   });
   const { emp } = useContext(ActionContext);
   const [values, setValues] = useState(null);
+  const [displayValue, setDisplayValue] = useState("********");
+  
+  const handleFocus = () => {
+    setDisplayValue("");
+  }
+
+  const handleBlur = () => {
+    setDisplayValue(values ? values.manager_password : "********");
+  };
 
   function handleChange(e) {
     const { value, name } = e.target;
     setValues({ ...values, [name]: value });
+    setDisplayValue(value);
   }
 
   async function handlesubmit(e) {
@@ -132,7 +142,7 @@ function EditEmployeeForm() {
               />
             </div>
 
-            {!emp && (
+            
               <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
@@ -146,11 +156,13 @@ function EditEmployeeForm() {
                   type="password"
                   className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   placeholder="Enter your password"
-                  value={values?.employeePassword}
+                  value={displayValue}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
                 />
               </div>
-            )}
+            
             <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"

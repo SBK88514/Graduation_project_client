@@ -15,7 +15,7 @@ import { ImUserPlus } from "react-icons/im";
 
 function CardIssues() {
 
-  const { mutateUpdate, handleEditIssue } = useContext(ActionContext);
+  const { mutateUpdate, handleEditIssue, getAllDetails } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
   const idProfession = user.employeeId;
  
@@ -48,12 +48,24 @@ function CardIssues() {
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
-    console.log(result);
 
     if (!result) return;
-    console.log(3);
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "building": item.issue_building,
+        "floor": item.issue_floor,
+        "apartment": item.issue_apartment,
+        "description": item.issue_description,
+        "status": item.issue_status,
+        "urgency": item.issue_urgency,
+        "profession": item.issue_profession?.profession_name,
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,       
+      };
+    });
 
-    exportToXL(result, "IssuesSheet");
+    exportToXL(prepareDataForExcel, "IssuesSheet");
   }
 
   return (

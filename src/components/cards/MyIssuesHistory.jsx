@@ -4,10 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import ExportButton from "../ui/ExportButton.jsx";
 import { exportToXL } from "../../lib";
 import { AuthContext } from "../contexts/AuthContext.jsx";
+import { ActionContext } from "../contexts/ActionContext.jsx";
 
 function MyIssuesHistory() {
   const { user } = useContext(AuthContext);
-
+  const{getAllDetails}=useContext(ActionContext)
   console.log(user);
   const idEmployee = user._id;
   console.log(idEmployee)
@@ -35,14 +36,25 @@ function MyIssuesHistory() {
     }));
   };
 
-  async function downloadXl() {
-    const result = await getAllDetails("/issues/getAllIssues");
-    console.log(result);
+  async function downloadXl(idEmployee) {
+    const result = await getAllDetails(`/issues/gethistorybyid/${idEmployee}`);
 
     if (!result) return;
-    console.log(3);
-
-    exportToXL(result, "IssuesSheet");
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "building": item.issue_building,
+        "floor": item.issue_floor,
+        "apartment": item.issue_apartment,
+        "description": item.issue_description,
+        "status": item.issue_status,
+        "urgency": item.issue_urgency,
+        "profession": item.issue_profession?.profession_name,
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,       
+      };
+    });
+    exportToXL(prepareDataForExcel, "IssuesSheet");
   }
 
   return (

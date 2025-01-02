@@ -6,6 +6,7 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 
 function CardIssues() {
   const { user } = useContext(AuthContext);
+  const { getAllDetails } = useContext(ActionContext);
   console.log(user);
 
   const [currentIndexes, setCurrentIndexes] = useState({});
@@ -26,12 +27,25 @@ function CardIssues() {
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
-    console.log(result);
 
     if (!result) return;
-    console.log(3);
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "building": item.issue_building,
+        "floor": item.issue_floor,
+        "apartment": item.issue_apartment,
+        "description": item.issue_description,
+        "status": item.issue_status,
+        "urgency": item.issue_urgency,
+        "profession": item.issue_profession?.profession_name,
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,       
+      };
+    });
 
-    exportToXL(result, "IssuesSheet");
+
+    exportToXL(prepareDataForExcel, "IssuesSheet");
   }
 
   const { issues, handleEditIssue } = useContext(ActionContext);
