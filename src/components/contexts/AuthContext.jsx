@@ -15,7 +15,6 @@ function AuthProvider({ children }) {
       const { data } = await axios.post("/users/employee/signin", values);
       if (data.success) {
         showSuccessToast("Signed-in user:", data?.data?.employeeName); //TODO not working
-        console.log("Signed-in user:", data.data.employeeName);
         setIsAuth(true);
         setUser(data.data);
         return true;
@@ -30,7 +29,6 @@ function AuthProvider({ children }) {
   async function authUser() {
     try {
       const { data } = await axios.get("/users/auth");
-      console.log(data);
       if (data.success) {
         setIsAuth(true);
         setUser(data.user);

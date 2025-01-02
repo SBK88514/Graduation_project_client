@@ -7,7 +7,6 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 function CardIssues() {
   const { user } = useContext(AuthContext);
   console.log(user);
- 
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -35,12 +34,13 @@ function CardIssues() {
     exportToXL(result, "IssuesSheet");
   }
 
-  const { issues, handleEditIssue } = useContext(ActionContext)
-
-
+  const { issues, handleEditIssue } = useContext(ActionContext);
 
   return (
     <div className="container mx-auto px-4 py-8  ">
+      <div className="flex-1 text-center">
+        <h1 className="text-2xl font-bold text-amber-900">My Issues</h1>
+      </div>
       <ExportButton download={downloadXl} />
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
@@ -145,11 +145,9 @@ function CardIssues() {
                 </svg>
               </button>
               <button
-
                 onClick={() =>
                   nextImage(issue?._id, issue?.issue_images.length)
                 }
-
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
               >
                 <svg
@@ -197,7 +195,9 @@ function CardIssues() {
                   </svg>
 
                   <span>{issue.employees?.employeeName}</span>
-                  <span>{issue.employees?.issue_profession?.profession_name}</span> 
+                  <span>
+                    {issue.employees?.issue_profession?.profession_name}
+                  </span>
                 </div>
               </div>
 
@@ -231,19 +231,17 @@ function CardIssues() {
                   </span>
                 </div>
 
-                <button 
-                onClick={() => handleEditIssue(issue)}
-                className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                <button
+                  onClick={() => handleEditIssue(issue)}
+                  className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium"
+                >
                   Update
                 </button>
               </div>
             </div>
           </div>
         ))}
-
-       
       </div>
-    
     </div>
   );
 }
