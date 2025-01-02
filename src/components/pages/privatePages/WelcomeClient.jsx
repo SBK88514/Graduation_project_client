@@ -17,7 +17,6 @@ function WelcomeClient() {
       countUsers: data.countUsers,
     }),
   });
-  console.log(data);
 
   return (
     <div className="w-full">
@@ -40,16 +39,17 @@ function WelcomeClient() {
           {/* Main Welcome Text */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 text-transparent bg-clip-text mb-4">
-              Welcome {user.manager_name}
+              Welcome {user.employeeName}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full mb-4" />
             <p className="text-amber-700 text-lg">
-              Your command center for managing everything as {user.permission}.
+              Your command center for managing everything as{" "}
+              <span className="text-amber-800 font-bold">Employee</span>.
             </p>
           </div>
 
           {/* Quick Stats Grid */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-3 gap-6 mb-8 text-center">
             <div className="bg-white/80 p-4 rounded-xl shadow-sm backdrop-blur-sm">
               <div className="text-amber-600 text-sm font-medium mb-1">
                 Active Users

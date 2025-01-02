@@ -4,16 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import ExportButton from "../ui/ExportButton.jsx";
 import { exportToXL } from "../../lib";
 import { AuthContext } from "../contexts/AuthContext.jsx";
+import WaveLoader from "../ui/WaveLoader.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 
 function MyIssuesHistory() {
   const { user } = useContext(AuthContext);
   const{getAllDetails}=useContext(ActionContext)
   console.log(user);
-  const idEmployee = user._id;
-  console.log(idEmployee)
 
-  const { data } = useQuery({
+  const idEmployee = user._id;
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_my_history"],
     queryFn: async () =>
       await axios.get(`/issues/gethistorybyid/${idEmployee}`),
@@ -36,6 +36,7 @@ function MyIssuesHistory() {
     }));
   };
 
+  
   async function downloadXl(idEmployee) {
     const result = await getAllDetails(`/issues/gethistorybyid/${idEmployee}`);
 
@@ -59,11 +60,18 @@ function MyIssuesHistory() {
 
   return (
     <div className="container mx-auto px-4 py-8  ">
+      <div className="flex-1 text-center">
+        <h1 className="text-2xl font-bold text-amber-900">My Issues History</h1>
+      </div>
       <ExportButton download={downloadXl} />
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
-        {/* {isLoading && <div>Loading...</div>}
-        {isError && <div>{error}</div>} */}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
+        {isError && <div>{error}</div>}
         {data?.map((issue) => (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
             {/* Location Pills */}

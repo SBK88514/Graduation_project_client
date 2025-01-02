@@ -52,6 +52,9 @@ function CardIssues() {
 
   return (
     <div className="container mx-auto px-4 py-8  ">
+      <div className="flex-1 text-center">
+        <h1 className="text-2xl font-bold text-amber-900">My Issues</h1>
+      </div>
       <ExportButton download={downloadXl} />
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}

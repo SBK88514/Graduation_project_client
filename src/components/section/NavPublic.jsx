@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function NavPublic() {
   return (
-    <nav className="bg-gradient-to-r from-amber-300  via-amber-600 to-amber-300 shadow-lg fixed w-full z-40">
+    <nav className="bg-gradient-to-r from-amber-300  via-amber-600 to-amber-300 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo/Brand */}
@@ -18,7 +18,7 @@ function NavPublic() {
               />
             </NavLink>
           </div>
-
+          <span className="">Client</span> {/*TODO: delete this line*/}
           {/* Center - Navigation Links */}
           <div className="hidden md:flex items-center justify-center space-x-12">
             <NavLink
@@ -46,14 +46,12 @@ function NavPublic() {
               Offices
             </NavLink>
           </div>
-
           {/* Right side - Login Button */}
           <div className="flex items-center">
             <button className="bg-amber-600 text-white px-6 py-2 rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200 font-medium">
               <NavLink to={"/login"}>Login</NavLink>
             </button>
           </div>
-
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button className="inline-flex items-center justify-center p-2 rounded-md text-amber-700 hover:text-amber-900 hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500">

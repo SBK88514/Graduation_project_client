@@ -25,7 +25,7 @@ const Navbar = () => {
                 className="w-44 rounded"
               />
             </a>
-
+            <span className="">Client</span> {/*TODO: delete this line*/}
             <div className="hidden md:flex space-x-8">
               {/* <NavLink
                 to="/addissue"
@@ -54,7 +54,6 @@ const Navbar = () => {
                 My Issues History
               </NavLink>
             </div>
-
             {/* Desktop User Menu */}
             <div className="hidden md:flex items-center">
               <div className="relative ">
@@ -91,7 +90,6 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
@@ -120,7 +118,7 @@ const Navbar = () => {
           />
 
           {/* Sidebar */}
-          <div className="fixed top-16 left-0 right-0 bg-amber-100 shadow-lg transform transition-transform duration-300 ease-in-out origin-top">
+          <div className="fixed top-16 left-0 right-0 bg-amber-100 shadow-lg transform transition-transform duration-300 ease-in-out origin-top w-[90%] rounded m-auto">
             <div className="flex flex-col w-full max-w-md mx-auto p-4">
               {/* Close button */}
               <div className="flex justify-end p-4">
@@ -150,6 +148,13 @@ const Navbar = () => {
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
                 >
                   My Issues
+                </NavLink>
+                <NavLink
+                  to="/myissuehistory"
+                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-lg"
+                  onClick={() => setIsSidebarOpen(false)}
+                >
+                  My Issues History
                 </NavLink>
               </div>
 
