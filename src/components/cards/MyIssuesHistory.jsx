@@ -9,7 +9,7 @@ import { ActionContext } from "../contexts/ActionContext.jsx";
 
 function MyIssuesHistory() {
   const { user } = useContext(AuthContext);
-  const{getAllDetails}=useContext(ActionContext)
+  const { getAllDetails } = useContext(ActionContext);
   console.log(user);
 
   const idEmployee = user._id;
@@ -36,7 +36,6 @@ function MyIssuesHistory() {
     }));
   };
 
-  
   async function downloadXl(idEmployee) {
     const result = await getAllDetails(`/issues/gethistorybyid/${idEmployee}`);
 
@@ -44,15 +43,15 @@ function MyIssuesHistory() {
     const prepareDataForExcel = result.map((item) => {
       return {
         id: item._id,
-        "building": item.issue_building,
-        "floor": item.issue_floor,
-        "apartment": item.issue_apartment,
-        "description": item.issue_description,
-        "status": item.issue_status,
-        "urgency": item.issue_urgency,
-        "profession": item.issue_profession?.profession_name,
+        building: item.issue_building,
+        floor: item.issue_floor,
+        apartment: item.issue_apartment,
+        description: item.issue_description,
+        status: item.issue_status,
+        urgency: item.issue_urgency,
+        profession: item.issue_profession?.profession_name,
         "Created At": item.createdAt,
-        "Updated At": item.updatedAt,       
+        "Updated At": item.updatedAt,
       };
     });
     exportToXL(prepareDataForExcel, "IssuesSheet");
@@ -201,7 +200,7 @@ function MyIssuesHistory() {
               {/* <div className="flex items-center justify-between mb-3"> */}
               <div className="flex items-center justify-between mb-3">
                 <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
-                  In Progress
+                  {issue.issue_status}
                 </span>
                 <div className="flex items-center space-x-1 text-amber-600">
                   <svg
@@ -218,7 +217,7 @@ function MyIssuesHistory() {
                     />
                   </svg>
 
-                  <span>{issue.employees?.employeeName}</span>
+                  <span>{issue.issue_profession?.profession_name}</span>
                 </div>
               </div>
 
@@ -247,14 +246,7 @@ function MyIssuesHistory() {
                       />
                     </svg>
                   </span>
-                  <span className="text-xs font-medium text-red-600">
-                    Urgent
-                  </span>
                 </div>
-
-                <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
-                  Update
-                </button>
               </div>
             </div>
           </div>
