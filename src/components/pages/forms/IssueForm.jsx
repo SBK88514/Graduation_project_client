@@ -8,7 +8,6 @@ import { X } from "lucide-react";
 import { date } from "yup";
 import { showErrorToast, showSuccessToast } from "../../../lib/Toast";
 
-
 const initialValues = {
   issue_building: "",
   issue_floor: "",
@@ -33,11 +32,9 @@ function IssueForm() {
       document.getElementById("issue_modal").close();
       queryClient.invalidateQueries({
         queryKey: ["get_issues"],
-        
       });
       queryClient.invalidateQueries({
-        queryKey: ["get_my_issues"],
-
+        queryKey: ["my_issues"],
       });
       showSuccessToast("Issue updated successfully");
       setIss(null);

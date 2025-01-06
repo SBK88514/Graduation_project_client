@@ -11,6 +11,8 @@ function SelectBox({ handleChange, id, value }) {
 
   return (
     <div>
+      {isLoading && <div>Loading...</div>}
+      {isError && <div>{error}</div>}
       <select
         id={id}
         name={id}
@@ -23,8 +25,6 @@ function SelectBox({ handleChange, id, value }) {
       >
         <option value={"all"}>Choose Permission</option>
 
-        {isLoading && <div>Loading...</div>}
-        {isError && <div>{error}</div>}
         {data?.map((profession) => (
           <option key={profession._id} value={profession._id}>
             {profession.profession_name}

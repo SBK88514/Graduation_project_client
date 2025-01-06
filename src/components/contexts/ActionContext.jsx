@@ -25,17 +25,7 @@ function ActionProvider({ children }) {
 
     },
   });
-  const [issues, setIssues] = useState(null);
-  const { mutate: mutateMyIssue } = useMutation({
-    mutationKey: ["get_my_issues"],
-    mutationFn: async (idEmployee) =>
-      axios.post("/users/getemployeebyid", idEmployee),
-    onSuccess: (data) => {
-      setIssues(data.data.data);
-      console.log(data);
-    },
-    onError: () => {},
-  });
+  
 
   function handleEditIssue(issue) {
     console.log(issue);
@@ -61,8 +51,6 @@ function ActionProvider({ children }) {
 
   const value = {
     mutateUpdate,
-    mutateMyIssue,
-    issues,
     setIss,
     handleEditIssue,
     iss,
