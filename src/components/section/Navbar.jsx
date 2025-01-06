@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user, signOut } = useContext(AuthContext);
-  const { mutateMyIssue, handleEditEmployee } = useContext(ActionContext);
+  const {  handleEditEmployee } = useContext(ActionContext);
 
   return (
     <>
@@ -27,12 +27,7 @@ const Navbar = () => {
             </a>
             
             <div className="hidden md:flex space-x-8">
-              {/* <NavLink
-                to="/addissue"
-                className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-              >
-                Add Issue
-              </NavLink> */}
+             
               <NavLink
                 to="/allissues"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -41,7 +36,6 @@ const Navbar = () => {
               </NavLink>
 
               <NavLink
-                onClick={() => mutateMyIssue({ id: user._id })}
                 to="/myissue"
                 className="text-white hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >

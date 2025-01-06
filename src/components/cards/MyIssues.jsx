@@ -3,6 +3,9 @@ import ExportButton from "../ui/ExportButton.jsx";
 import { exportToXL } from "../../lib";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { AuthContext } from "../contexts/AuthContext.jsx";
+import { use } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 function CardIssues() {
   const { user } = useContext(AuthContext);
@@ -48,7 +51,12 @@ function CardIssues() {
     exportToXL(prepareDataForExcel, "IssuesSheet");
   }
 
-  const { issues, handleEditIssue } = useContext(ActionContext);
+  const {  handleEditIssue } = useContext(ActionContext);
+  const {data} = useQuery({
+      queryKey: ["my_issues"],
+      queryFn: async() => axios.get(`/users/getemployeebyid/${user._id}`),
+      select: (data) => data.data.data
+  })
 
   return (
     <div className="container mx-auto px-4 py-8  ">
@@ -60,7 +68,7 @@ function CardIssues() {
         {/* Issue Card */}
         {/* {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>} */}
-        {issues?.map((issue) => (
+        {data?.map((issue) => (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
             {/* Location Pills */}
             <div className="flex space-x-2 mb-3">
