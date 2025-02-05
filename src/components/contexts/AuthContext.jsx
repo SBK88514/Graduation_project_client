@@ -6,13 +6,14 @@ import ActionProvider from "./ActionContext";
 export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  // console.log(children)
+  console.log(222222222222222222222222, children)
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState(null);
 
   async function handleLogin(values) {
     try {
       const { data } = await axios.post("/users/employee/signin", values);
+      console.log("🔥 Response from server:", data); // 🔍 בדיקה מה מתקבל
       if (data.success) {
         showSuccessToast("Signed-in user:", data?.data?.employeeName); //TODO not working
         setIsAuth(true);
