@@ -6,7 +6,7 @@ import WaveLoader from "../../ui/WaveLoader";
 
 function WelcomeClient() {
   const { user } = useContext(AuthContext);
-
+  console.log(111111111, user);
   const url = `/general/getalllength`;
 
   const { data, isLoading, isError, error } = useQuery({
@@ -39,7 +39,7 @@ function WelcomeClient() {
           {/* Main Welcome Text */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 text-transparent bg-clip-text mb-4">
-              Welcome {user.employeeName}
+              Welcome {user?.employeeName}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full mb-4" />
             <p className="text-amber-700 text-lg">
